@@ -5,6 +5,10 @@ name = "pypi"
 
 [packages]
 django = "*"
+djangorestframework = "*"
+drf-nested-routers = "*"
+psycopg2 = "*"
+pillow = "*"
 
 [dev-packages]
 
