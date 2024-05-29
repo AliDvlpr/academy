@@ -1,0 +1,9 @@
+{
+    "app": "albacademy",
+    "disks": [
+      {
+        "name": "media",
+        "mountTo": "media"
+      }
+    ]
+  }

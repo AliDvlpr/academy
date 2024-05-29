@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # Add this line
 ]
 
 ROOT_URLCONF = 'academy.urls'
@@ -112,12 +114,23 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'fa-ir'
+# Define the languages you want to support
+LANGUAGES = [
+    ('en', _('English')),
+    ('fa', _('Persian')),
+]
 
-TIME_ZONE = 'UTC'
+# Set the path for locale files
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
+# Set the default language
+LANGUAGE_CODE = 'en'
+
+# Configure the time zone and other settings
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
 
