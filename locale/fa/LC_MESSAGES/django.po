@@ -24,3 +24,5 @@ msgstr ""
 #: .\academy\settings.py:120
 msgid "Persian"
 msgstr ""
+
+

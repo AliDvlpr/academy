@@ -8,10 +8,11 @@ class CourseAttributesInline(admin.TabularInline):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug', 'last_update']
+    list_display = ['title', 'slug', 'view_count', 'last_update']
     list_per_page = 25
     search_fields = ['title']
     inlines = [CourseAttributesInline]
+    readonly_fields = ['view_count']
     prepopulated_fields = {
         'slug': ['title']
     }

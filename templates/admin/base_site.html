@@ -1,0 +1,74 @@
+{% extends "admin/base.html" %}
+
+{% load i18n %}  <!-- Load the i18n template tag library -->
+
+{% block title %}
+    {% trans 'Django administration' %}
+{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">{% trans 'Django administration' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    </div>
+{% endblock %}
+
+{% block userlinks %}
+    {% if user.is_active and user.is_staff %}
+        <div id="language-switcher">
+            <form method="post" action="{% url 'set_language' %}">
+                {% csrf_token %}
+                <input type="hidden" name="language" value="{% if LANGUAGE_CODE == 'en' %}fa{% else %}en{% endif %}">  <!-- Toggle between 'en' and 'fa' -->
+                <button type="submit" class="submit-button">{% if LANGUAGE_CODE == 'en' %}{% trans 'Switch to Persian' %}{% else %}{% trans 'Switch to English' %}{% endif %}</button>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div id="content" class="{% block coltype %}colM{% endblock %}">
+        {% block messages %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endblock %}
+        {% block main %}
+            {% block extrapretty %}
+            {% endblock %}
+            {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+            {% block content_sec %}
+            {% endblock %}
+            <br class="clear" />
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block extrastyle %}
+    <style>
+        .submit-button {
+            background-color: #000000; /* Green background */
+            border: none; /* Remove borders */
+            border-radius: 10px;
+            color: white; /* White text */
+            padding: 10px 20px; /* Padding */
+            text-align: center; /* Center text */
+            text-decoration: none; /* Remove underline */
+            display: inline-block; /* Make it inline */
+            font-size: 16px; /* Font size */
+            margin: 4px 2px; /* Margin */
+            transition-duration: 0.4s; /* Animation duration */
+            cursor: pointer; /* Cursor pointer */
+        }
+
+        .submit-button:hover {
+            background-color: #4781a7; /* Darker green background on hover */
+        }
+    </style>
+{% endblock %}

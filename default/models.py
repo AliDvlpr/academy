@@ -22,6 +22,7 @@ class Course(models.Model):
     about = models.TextField(null=True, blank=True)
     last_update = models.DateTimeField(auto_now=True)
     teachers = models.ManyToManyField(Teacher, related_name='courses')
+    view_count = models.IntegerField(default=0)
 
     def __str__(self) -> str:
         return self.title
@@ -40,7 +41,7 @@ class CourseAttributes(models.Model):
 
 class Prereg(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False)
-    phone = models.CharField(max_length=11, unique=True, null=False, blank=False)
+    phone = models.CharField(max_length=11, null=False, blank=False)
     email = models.EmailField(max_length=225, null=True, blank=True)
     course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name='preregs')
     created = models.DateTimeField(auto_now_add=True)

@@ -1,9 +1,13 @@
 {
-    "app": "albacademy",
-    "disks": [
-      {
-        "name": "media",
-        "mountTo": "media"
-      }
-    ]
-  }
+  "app": "albacademy",
+  "disks": [
+    {
+      "name": "images",
+      "mountTo": "media/images_uploaded"
+    },
+    {
+      "name": "videos",
+      "mountTo": "media/videos_uploaded"
+    }
+  ]
+}
