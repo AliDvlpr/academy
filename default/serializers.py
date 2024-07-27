@@ -20,7 +20,7 @@ class CourseSerializer(serializers.ModelSerializer):
     attributes = CourseAttributesSerializer(many=True, read_only=True)
     class Meta:
         model = Course
-        fields =  ['id','title','slug', 'video', 'description', 'attributes', 'teachers', 'last_update']
+        fields =  ['id','title','slug', 'video', 'description', 'about', 'attributes', 'teachers', 'last_update']
 
 
 class PreregSerializer(serializers.ModelSerializer):
