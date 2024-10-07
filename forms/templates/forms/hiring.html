@@ -1,0 +1,141 @@
+{% load static %}
+{% load django_bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم جذب نیرو</title>
+    {% bootstrap_css %}
+    <style>
+        body {
+            direction: rtl;
+            text-align: right;
+        }
+        .form-control {
+            text-align: right;
+        }
+        .custom-file-label {
+            margin: 10px 0;
+        }
+        .alert {
+            display: none;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .close {
+            padding: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>فرم جذب نیرو</h2>
+        <div id="alert-success" class="alert alert-success" role="alert">
+            فرم با موفقیت ارسال شد!
+            <span class="close" aria-label="Close">&times;</span>
+        </div>
+        <div id="alert-error" class="alert alert-danger" role="alert">
+            خطایی رخ داده است. لطفا دوباره تلاش کنید.
+            <span class="close" aria-label="Close">&times;</span>
+        </div>
+        <form id="hiring-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <div class="form-group">
+                <label for="resume"><i class="zmdi zmdi-lock-outline"></i></label>
+                <input type="file" name="resume" id="resume" class="form-control">
+                <label for="resume" class="btn btn-outline-dark custom-file-label">انتخاب فایل...</label>
+            </div>
+            <button type="submit" class="btn btn-primary">تایید و ارسال</button>
+        </form>
+    </div>
+    {% bootstrap_javascript %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('hiring-form');
+            const fileInput = document.getElementById('resume');
+            const fileInputLabel = document.querySelector('.custom-file-label');
+            const alertSuccess = document.getElementById('alert-success');
+            const alertError = document.getElementById('alert-error');
+            const closeButtons = document.querySelectorAll('.close');
+
+            fileInput.style.display = 'none';
+
+            fileInputLabel.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', function() {
+                const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'هیچ فایلی انتخاب نشده است';
+                fileInputLabel.innerHTML = fileName;
+            });
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData();
+                formData.append('pdf', fileInput.files[0]);
+
+                fetch("{% url 'upload_resume' %}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const resumeId = data.resume_id;
+                        const hiddenResumeInput = document.createElement('input');
+                        hiddenResumeInput.type = 'hidden';
+                        hiddenResumeInput.name = 'resume';
+                        hiddenResumeInput.value = resumeId;
+                        form.appendChild(hiddenResumeInput);
+
+                        fetch(form.action, {
+                            method: 'POST',
+                            body: new FormData(form),
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alertSuccess.style.display = 'block';
+                                alertError.style.display = 'none';
+                            } else {
+                                alertSuccess.style.display = 'none';
+                                alertError.style.display = 'block';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alertSuccess.style.display = 'none';
+                            alertError.style.display = 'block';
+                        });
+                    } else {
+                        alertSuccess.style.display = 'none';
+                        alertError.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alertSuccess.style.display = 'none';
+                    alertError.style.display = 'block';
+                });
+            });
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.parentElement.style.display = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

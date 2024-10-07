@@ -45,10 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap5',
     "corsheaders",
     'rest_framework',
     'core',
     'default',
+    'forms',
 ]
 
 MIDDLEWARE = [
