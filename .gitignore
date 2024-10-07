@@ -1,1 +1,8 @@
+# Ignore the media folder
 /media/
+
+# Ignore other common files and directories
+*.log
+*.pyc
+__pycache__/
+.env
