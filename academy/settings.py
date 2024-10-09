@@ -29,8 +29,13 @@ SECRET_KEY = 'django-insecure-fs@@%qbe#jrig6v@z!*ypq)s%@3nfg#fio#eu3)$8pg!%q-bk!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'alborz-institute.com', 'www.alborz-institute.com', '185.208.175.233', 'alborz.tech', 'www.alborz.tech']
 
+CSRF_TRUSTED_ORIGINS = ['https://alborz-institute.com', 'https://alborz.tech']
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+FORCE_SCRIPT_NAME = '/prereg/'
 
 # Application definition
 
@@ -93,14 +98,13 @@ WSGI_APPLICATION = 'academy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'academydb', 
-        'USER': 'postgres',
+        'NAME': 'academydb',
+        'USER': 'admin',
         'PASSWORD': '1q2w3e4r5t6yAli!!',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -147,9 +151,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/prereg/staticfiles/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/prereg/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type

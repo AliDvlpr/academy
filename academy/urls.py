@@ -20,6 +20,9 @@ from django.urls import path, include
 from django.contrib import admin
 from django.views.i18n import set_language
 
+admin.site.site_header = 'پنل ادمین البرز'
+admin.site.index_title = 'ادمین بخش آموزش'
+
 urlpatterns = [
     path('v1/admin/', admin.site.urls),
     path('v1/api/', include('default.urls')),
