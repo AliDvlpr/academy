@@ -22,7 +22,7 @@ from django.views.i18n import set_language
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('default.urls')),
+    path('v1/api/', include('default.urls')),
     path('forms/', include('forms.urls')),
     path('set_language/', set_language, name='set_language'),
 ]
