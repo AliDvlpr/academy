@@ -26,7 +26,7 @@ admin.site.index_title = 'ادمین بخش آموزش'
 urlpatterns = [
     path('v1/admin/', admin.site.urls),
     path('v1/api/', include('default.urls')),
-    path('forms/', include('forms.urls')),
+    path('v1/forms/', include('forms.urls')),
     path('set_language/', set_language, name='set_language'),
 ]
 if settings.DEBUG:

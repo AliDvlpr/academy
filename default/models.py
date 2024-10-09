@@ -22,7 +22,7 @@ class Teacher(models.Model):
 class Course(models.Model):
     title = models.CharField(max_length=255, null=False, blank=False, verbose_name=_('عنوان'))
     slug = models.SlugField(unique=True, verbose_name=_('تگ'))
-    video = models.FileField(upload_to='videos_uploaded',null=True, blank=True, verbose_name=_('ویدیو'))
+    video = models.TextField()
     description = models.TextField(null=True, blank=True, verbose_name=_('توضیحات'))
     about = models.TextField(null=True, blank=True, verbose_name=_('درباره'))
     last_update = models.DateTimeField(auto_now=True, verbose_name=_('آخرین آپدیت'))

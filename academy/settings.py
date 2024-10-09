@@ -35,7 +35,7 @@ CSRF_TRUSTED_ORIGINS = ['https://alborz-institute.com', 'https://alborz.tech']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-FORCE_SCRIPT_NAME = '/prereg/'
+URL_PRIFIX = "v1/"
 
 # Application definition
 
@@ -151,10 +151,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/prereg/staticfiles/'
+STATIC_URL = '/v1/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_URL = '/prereg/media/'
+MEDIA_URL = '/v1/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
