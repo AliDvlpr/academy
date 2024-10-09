@@ -21,7 +21,7 @@ from django.contrib import admin
 from django.views.i18n import set_language
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('v1/admin/', admin.site.urls),
     path('v1/api/', include('default.urls')),
     path('forms/', include('forms.urls')),
     path('set_language/', set_language, name='set_language'),
