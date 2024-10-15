@@ -13,15 +13,19 @@ class CourseAttributesSerializer(serializers.ModelSerializer):
         
     class Meta:
         model = CourseAttributes
-        fields = ['id', 'attribute']
+        fields = ['id', 'attribute', 'gif']
 
 class CourseSerializer(serializers.ModelSerializer):
     teachers = TeacherSerializer(many=True, read_only=True)
-    attributes = CourseAttributesSerializer(many=True, read_only=True)
+    attributes = serializers.SerializerMethodField()
+
     class Meta:
         model = Course
-        fields =  ['id','title','slug', 'video', 'description', 'about', 'attributes', 'teachers', 'last_update']
+        fields = ['id', 'title', 'slug', 'video', 'description', 'about', 'attributes', 'teachers', 'last_update']
 
+    def get_attributes(self, obj):
+        attributes = CourseAttributes.objects.filter(course=obj).order_by('id')
+        return CourseAttributesSerializer(attributes, many=True).data
 
 class PreregSerializer(serializers.ModelSerializer):
     class Meta:

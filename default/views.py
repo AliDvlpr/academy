@@ -38,9 +38,10 @@ class CourseViewSet(ModelViewSet):
 class CourseAttributesViewSet(ModelViewSet):
     http_method_names = ['get']
     serializer_class = CourseAttributesSerializer
+    
 
     def get_queryset(self):
-        return CourseAttributes.objects.filter(course__slug=self.kwargs['course_slug'])
+        return CourseAttributes.objects.filter(course__slug=self.kwargs['course_slug']).order_by('id')
 
     def get_serializer_context(self):
          return {'course_slug': self.kwargs['course_slug']}

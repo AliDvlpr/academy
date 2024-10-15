@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from .validators import *
 
 # Create your models here.
 class Teacher(models.Model):
@@ -22,7 +23,7 @@ class Teacher(models.Model):
 class Course(models.Model):
     title = models.CharField(max_length=255, null=False, blank=False, verbose_name=_('عنوان'))
     slug = models.SlugField(unique=True, verbose_name=_('تگ'))
-    video = models.TextField()
+    video = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True, verbose_name=_('توضیحات'))
     about = models.TextField(null=True, blank=True, verbose_name=_('درباره'))
     last_update = models.DateTimeField(auto_now=True, verbose_name=_('آخرین آپدیت'))
@@ -44,6 +45,7 @@ class Course(models.Model):
 class CourseAttributes(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="attributes", verbose_name=_('دوره'))
     attribute = models.TextField(verbose_name=_('ویژگی'))
+    gif = models.FileField(upload_to='gifs_uploaded', validators=[validate_big_file_size],null=True, blank=True, verbose_name=_('گیف'))
 
     def __str__(self):
         return f"{self.course.title} - {self.attribute}"
