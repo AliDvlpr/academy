@@ -19,16 +19,28 @@ class Teacher(models.Model):
         verbose_name = _('استاد')
         verbose_name_plural = _('اساتید')
 
+class Gift(models.Model):
+    title = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('عنوان'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('توضیحات'))
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = _('هدیه')
+        verbose_name_plural = _('هدایا')
 
 class Course(models.Model):
     title = models.CharField(max_length=255, null=False, blank=False, verbose_name=_('عنوان'))
     slug = models.SlugField(unique=True, verbose_name=_('تگ'))
     video = models.TextField(null=True, blank=True)
+    roadmap = models.ImageField(upload_to="images_uploaded",null=True, blank=True, verbose_name=_('رودمپ'))
     description = models.TextField(null=True, blank=True, verbose_name=_('توضیحات'))
     about = models.TextField(null=True, blank=True, verbose_name=_('درباره'))
     last_update = models.DateTimeField(auto_now=True, verbose_name=_('آخرین آپدیت'))
     teachers = models.ManyToManyField(Teacher, related_name='courses', verbose_name=_('اساتید'))
     view_count = models.IntegerField(default=0, verbose_name=_('تعداد بازدید'))
+    gift = models.ForeignKey(Gift, on_delete=models.CASCADE, null=True, blank=True, related_name='courses', verbose_name=_('هدیه دوره'))
 
     def __str__(self) -> str:
         return self.title

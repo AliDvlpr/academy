@@ -10,7 +10,7 @@ class CourseAttributesInline(TabularInline):
 
 @admin.register(Course)
 class CourseAdmin(ModelAdmin):
-    list_display = ['title', 'slug', 'view_count', 'last_update']
+    list_display = ['title','view_on_site',  'view_count', 'last_update', 'gift']
     list_per_page = 25
     search_fields = ['title']
     inlines = [CourseAttributesInline]
@@ -18,7 +18,15 @@ class CourseAdmin(ModelAdmin):
     prepopulated_fields = {
         'slug': ['title']
     }
+    
+    def view_on_site(self, obj):
+        return format_html('<a href="/courses/{}" target="_blank">بازدید</a>', obj.slug)
 
+    view_on_site.short_description = 'صفحه وب'
+
+@admin.register(Gift)
+class GiftAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description']
 
 @admin.register(Teacher)
 class TeacherAdmin(ModelAdmin):
